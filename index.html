@@ -341,8 +341,28 @@
 
     .about-text p:last-child { margin-bottom: 0; }
 
+    .about-scroll-track {
+      position: relative;
+    }
+
     .about-sticky {
-      padding: 80px 48px;
+      position: sticky;
+      top: 0;
+      padding: 80px 48px 24px;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .about-grid-scroll { will-change: transform; }
+
+    .about-sticky .section-label { margin-bottom: 20px; }
+
+    .about-sticky .about-text p {
+      margin-bottom: 10px;
+      line-height: 1.5;
     }
 
     /* GIF Stack */
@@ -649,7 +669,7 @@
       .nav-links { gap: 24px; }
       #hero { padding: 0 24px 60px; }
       section { padding: 80px 24px; }
-      .about-sticky { padding: 60px 24px; }
+      .about-sticky { padding: 60px 24px 24px; }
       .about-grid { grid-template-columns: 1fr; gap: 56px; }
       .experience-item { grid-template-columns: 1fr; gap: 8px; }
       .projects-grid { grid-template-columns: 1fr 1fr; }
@@ -714,10 +734,11 @@
 
   <!-- About -->
   <section id="about">
+    <div class="about-scroll-track">
     <div class="about-sticky">
     <div class="section-inner">
       <p class="section-label">About</p>
-      <div class="about-grid">
+      <div class="about-grid-scroll"><div class="about-grid">
         <div class="about-text">
           <p>I spent my first eight years in tech heads-down as an individual contributor, writing .NET, JavaScript, and REST APIs at Everyday Health, XO Group, and Huge. That was nearly a decade ago.</p>
           <p>Since then, I've led engineering teams at Shutterstock and now serve as VP of Engineering at Giphy, where I oversee the website, apps, search, APIs, partnerships, and infrastructure across an org of up to 50 people. My approach: high standards, honest feedback, leading with empathy, and only as much process as needed.</p>
@@ -741,7 +762,8 @@
             </div>
           </div>
         </div>
-      </div>
+      </div></div>
+    </div>
     </div>
     </div>
   </section>
@@ -956,16 +978,38 @@
 
     observeEls.forEach(el => fadeObserver.observe(el));
 
-    // GIF stack: scroll-driven deal as about section travels up through the viewport
+    // GIF stack: scroll-driven deal animation (one card per viewport height of scroll)
     (function () {
-      const cards = [...document.querySelectorAll('.gif-card')];
-      const dealOrder = [3, 2, 1, 0];
+      const gifStack = document.getElementById('gifStack');
+      const cards = [...gifStack.querySelectorAll('.gif-card')];
+      const scrollTrack = document.querySelector('.about-scroll-track');
+      const aboutGridScroll = document.querySelector('.about-grid-scroll');
+      const stickyEl = document.querySelector('.about-sticky');
+
+      function measureTextOverflow() {
+        const stickyRect = stickyEl.getBoundingClientRect();
+        const gridRect = aboutGridScroll.getBoundingClientRect();
+        return Math.max(0, gridRect.bottom - stickyRect.bottom);
+      }
+
       const finalStates = [
         { rotate: -5, tx:  8, ty: 10, zIndex: 4 },
         { rotate:  6, tx: -4, ty:  4, zIndex: 3 },
         { rotate: -3, tx: 12, ty:  0, zIndex: 2 },
         { rotate:  8, tx: -8, ty:  6, zIndex: 1 },
       ];
+      const dealOrder = [3, 2, 1, 0];
+      let textOverflow = 0;
+
+      function setTrackHeight() {
+        textOverflow = measureTextOverflow();
+        const cw = window.innerHeight;
+        const lastThreshold = Math.max(textOverflow, cw) + (dealOrder.length - 2) * cw;
+        scrollTrack.style.minHeight = (window.innerHeight + lastThreshold + 120) + 'px';
+      }
+      setTrackHeight();
+      window.addEventListener('resize', setTrackHeight, { passive: true });
+
       const cardState = new Array(cards.length).fill('hidden');
 
       function dealCard(cardIndex) {
@@ -995,15 +1039,16 @@
         card.style.opacity = '0';
       }
 
-      const aboutSection = document.getElementById('about');
-
       function onScroll() {
-        const rect = aboutSection.getBoundingClientRect();
-        // How many px the section top has traveled past the bottom of the viewport
-        const scrolled = Math.max(0, window.innerHeight - rect.top);
-        const step = window.innerHeight * 0.3; // one card per 30% of viewport height
+        const scrolled = Math.max(0, -scrollTrack.getBoundingClientRect().top);
+        const cw = window.innerHeight;
+        const postTextStart = Math.max(textOverflow, cw);
+
+        aboutGridScroll.style.transform = `translateY(${-Math.min(scrolled, textOverflow)}px)`;
+
         dealOrder.forEach((cardIdx, i) => {
-          scrolled >= i * step ? dealCard(cardIdx) : undealCard(cardIdx);
+          const threshold = i === 0 ? 0 : postTextStart + (i - 1) * cw;
+          scrolled >= threshold ? dealCard(cardIdx) : undealCard(cardIdx);
         });
       }
 
