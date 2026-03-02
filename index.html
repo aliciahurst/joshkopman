@@ -344,7 +344,6 @@
     /* The about section uses a tall scroll track so cards reveal as you scroll.
        The visible content is sticky; the inner grid shifts up via JS to show all text first. */
     .about-scroll-track {
-      min-height: 420vh;
       position: relative;
     }
 
@@ -987,7 +986,6 @@
         return Math.max(0, gridRect.bottom - stickyRect.bottom);
       }
       let textOverflow = measureTextOverflow();
-      window.addEventListener('resize', () => { textOverflow = measureTextOverflow(); }, { passive: true });
 
       // Final position for each card; dealt in order 3→2→1→0 so index 0 ends up on top
       const finalStates = [
@@ -997,6 +995,17 @@
         { rotate:  8, tx: -8, ty:  6, zIndex: 1 },
       ];
       const dealOrder = [3, 2, 1, 0];
+
+      // Set scroll track to exactly the height needed for all cards to deal — no wasted space
+      function setTrackHeight() {
+        textOverflow = measureTextOverflow();
+        const cw = window.innerHeight * 0.8;
+        // last card deals at: max(textOverflow, cw) + (dealOrder.length - 2) * cw
+        const lastThreshold = Math.max(textOverflow, cw) + (dealOrder.length - 2) * cw;
+        scrollTrack.style.minHeight = (window.innerHeight + lastThreshold + 120) + 'px';
+      }
+      setTrackHeight();
+      window.addEventListener('resize', setTrackHeight, { passive: true });
       const cardState = new Array(cards.length).fill('hidden');
 
       function dealCard(cardIndex) {
