@@ -999,7 +999,7 @@
       // Set scroll track to exactly the height needed for all cards to deal — no wasted space
       function setTrackHeight() {
         textOverflow = measureTextOverflow();
-        const cw = window.innerHeight * 0.8;
+        const cw = window.innerHeight * 0.4;
         // last card deals at: max(textOverflow, cw) + (dealOrder.length - 2) * cw
         const lastThreshold = Math.max(textOverflow, cw) + (dealOrder.length - 2) * cw;
         scrollTrack.style.minHeight = (window.innerHeight + lastThreshold + 120) + 'px';
@@ -1037,7 +1037,7 @@
 
       function onScroll() {
         const scrolled = Math.max(0, -scrollTrack.getBoundingClientRect().top);
-        const cardScrollWindow = window.innerHeight * 0.8;
+        const cardScrollWindow = window.innerHeight * 0.4;
         const postTextStart = Math.max(textOverflow, cardScrollWindow);
 
         aboutGridScroll.style.transform = `translateY(${-Math.min(scrolled, textOverflow)}px)`;
