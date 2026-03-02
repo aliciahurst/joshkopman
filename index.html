@@ -10,9 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* =============================================
-       RESET & BASE
-    ============================================= */
+    /* Reset & Base */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -20,27 +18,23 @@
     }
 
     :root {
-      --bg:        #030303;
-      --bg-alt:    #0d0d0d;
-      --ink:       #f0f0ee;
-      --ink-mid:   #a0a09c;
-      --ink-muted: #606060;
-      --border:    rgba(255, 255, 255, 0.1);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
-      --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.6);
+      --bg:         #030303;
+      --bg-alt:     #0d0d0d;
+      --ink:        #f0f0ee;
+      --ink-mid:    #a0a09c;
+      --ink-muted:  #606060;
+      --border:     rgba(255, 255, 255, 0.1);
       --shadow-card: 0 16px 64px rgba(0, 0, 0, 0.7);
       --font-serif: 'Quattrocento', Georgia, serif;
-      --font-sans: 'Hanken Grotesk', system-ui, sans-serif;
-      --max-width: 1100px;
+      --font-sans:  'Hanken Grotesk', system-ui, sans-serif;
+      --max-width:  1100px;
       --nav-height: 64px;
-      --accent:   #00e4cc;
-      --accent-3: #f72585;
-      --accent-4: #ffd60a;
+      --accent:     #00e4cc;
+      --accent-3:   #f72585;
+      --accent-4:   #ffd60a;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       background-color: var(--bg);
@@ -58,9 +52,7 @@
       color: var(--bg);
     }
 
-    /* =============================================
-       NAV
-    ============================================= */
+    /* Nav */
     nav {
       position: absolute;
       top: 0;
@@ -72,7 +64,6 @@
       justify-content: space-between;
       padding: 0 48px;
       z-index: 10;
-      background: transparent;
     }
 
     .nav-logo {
@@ -103,13 +94,9 @@
       transition: color 0.2s ease;
     }
 
-    .nav-links a:hover {
-      color: var(--accent);
-    }
+    .nav-links a:hover { color: var(--accent); }
 
-    /* =============================================
-       HERO
-    ============================================= */
+    /* Hero */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -123,7 +110,6 @@
       background-position: center center;
     }
 
-    /* Gradient overlay: dark at bottom for text, dark at top for nav legibility, dark on left */
     #hero::before {
       content: '';
       position: absolute;
@@ -137,7 +123,6 @@
         );
       z-index: 1;
     }
-
 
     .hero-bg-text {
       position: absolute;
@@ -189,11 +174,6 @@
       animation: fadeUp 0.9s ease 0.35s forwards;
     }
 
-    .hero-name em {
-      font-style: italic;
-      font-weight: 400;
-    }
-
     .hero-bottom {
       display: flex;
       align-items: flex-end;
@@ -240,7 +220,6 @@
       white-space: nowrap;
     }
 
-    /* Icon-only hero links (GitHub, LinkedIn) get consistent sizing */
     .hero-link--icon {
       min-width: 40px;
       padding: 0 12px;
@@ -261,13 +240,9 @@
       transition: filter 0.2s ease;
     }
 
-    .hero-link:hover img {
-      filter: brightness(0) invert(1);
-    }
+    .hero-link:hover img { filter: brightness(0) invert(1); }
 
-    /* =============================================
-       COMPANY LOGOS STRIP
-    ============================================= */
+    /* Logo Strip */
     .logo-strip {
       position: relative;
       background: var(--bg-alt);
@@ -275,7 +250,6 @@
       padding: 40px 48px;
     }
 
-    /* Fade the hero image into the logo strip from above */
     .logo-strip::before {
       content: '';
       position: absolute;
@@ -306,13 +280,9 @@
       transition: opacity 0.25s ease;
     }
 
-    .logo-strip img:hover {
-      opacity: 0.85;
-    }
+    .logo-strip img:hover { opacity: 0.85; }
 
-    /* =============================================
-       SECTION BASE
-    ============================================= */
+    /* Sections */
     section {
       padding: 120px 48px;
     }
@@ -344,16 +314,13 @@
       opacity: 0.4;
     }
 
-    /* Per-section label colors — each section gets its own hue */
     #about    .section-label { color: var(--accent-3); }
     #experience .section-label { color: var(--accent-4); }
-    /* #projects keeps the default --accent teal */
 
-    /* =============================================
-       ABOUT
-    ============================================= */
+    /* About */
     #about {
       background: var(--bg);
+      padding: 0;
     }
 
     .about-grid {
@@ -372,33 +339,11 @@
       margin-bottom: 24px;
     }
 
-    .about-text p:last-child {
-      margin-bottom: 0;
-    }
+    .about-text p:last-child { margin-bottom: 0; }
 
-    .about-pull {
-      font-family: var(--font-serif);
-      font-size: clamp(24px, 3vw, 38px);
-      font-weight: 700;
-      font-style: italic;
-      line-height: 1.3;
-      color: var(--ink);
-      margin-bottom: 40px;
-    }
-
-    /* =============================================
-       GIF STACK
-    ============================================= */
-
-    /* The about section needs extra scroll height to pace the card reveals.
-       We achieve this by wrapping in a tall scroll container and making
-       the visible content sticky inside it. */
-    #about {
-      padding: 0;
-    }
-
+    /* The about section uses a tall scroll track so cards reveal as you scroll.
+       The visible content is sticky; the inner grid shifts up via JS to show all text first. */
     .about-scroll-track {
-      /* 100vh (initial view) + 80vh first-card pause + 3 × 80vh cards + 20vh tail */
       min-height: 420vh;
       position: relative;
     }
@@ -414,26 +359,16 @@
       justify-content: flex-start;
     }
 
-    /* The inner grid scrolls upward via JS transform as the user scrolls,
-       so all text becomes readable before the gif cards start appearing. */
-    .about-grid-scroll {
-      will-change: transform;
-    }
+    .about-grid-scroll { will-change: transform; }
 
-    /* Tighten spacing inside the sticky about panel to fit within 100vh */
-    .about-sticky .section-label {
-      margin-bottom: 20px;
-    }
-
-    .about-sticky .about-pull {
-      margin-bottom: 16px;
-    }
+    .about-sticky .section-label { margin-bottom: 20px; }
 
     .about-sticky .about-text p {
       margin-bottom: 10px;
       line-height: 1.5;
     }
 
+    /* GIF Stack */
     .gif-stack-container {
       display: flex;
       flex-direction: column;
@@ -444,7 +379,6 @@
       font-family: var(--font-serif);
       font-size: 18px;
       font-weight: 700;
-      font-style: normal;
       color: var(--ink);
       margin-bottom: 48px;
       text-align: center;
@@ -466,12 +400,10 @@
       overflow: hidden;
       box-shadow: var(--shadow-card);
       cursor: default;
-      /* All cards start stacked, above and invisible */
       top: 30px;
       left: 30px;
       opacity: 0;
       transform: translateY(-60px) rotate(0deg);
-      /* No transition by default — JS will add it per-card when dealing */
     }
 
     .gif-card img {
@@ -481,15 +413,9 @@
       display: block;
     }
 
-    /* When a card is "dealt", JS assigns inline transform/opacity.
-       The transition is also set inline so timing is per-card. */
-    .gif-card.dealt {
-      opacity: 1;
-    }
+    .gif-card.dealt { opacity: 1; }
 
-    /* =============================================
-       EXPERIENCE
-    ============================================= */
+    /* Experience */
     #experience {
       background: var(--bg-alt);
       border-top: 1px solid var(--border);
@@ -518,9 +444,7 @@
       transform: translateY(0);
     }
 
-    .experience-item:first-child {
-      border-top: 1px solid var(--border);
-    }
+    .experience-item:first-child { border-top: 1px solid var(--border); }
 
     .exp-company {
       font-family: var(--font-serif);
@@ -551,18 +475,14 @@
       white-space: nowrap;
     }
 
-    /* =============================================
-       PROJECTS
-    ============================================= */
-    #projects {
-      background: var(--bg);
-    }
+    /* Projects */
+    #projects { background: var(--bg); }
+
 
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2px;
-      margin-top: 0;
     }
 
     .project-card {
@@ -582,9 +502,7 @@
       transform: translateY(0);
     }
 
-    .project-card:hover {
-      background: #141414;
-    }
+    .project-card:hover { background: #141414; }
 
     .project-header {
       display: flex;
@@ -636,7 +554,6 @@
       margin-top: 4px;
     }
 
-    /* Non-github links: bordered pill with ↗ arrow */
     .project-link {
       display: inline-flex;
       align-items: center;
@@ -662,7 +579,6 @@
       border-color: var(--accent);
     }
 
-    /* GitHub links: no border, just icon */
     .project-link--github {
       border: none;
       padding: 5px 6px;
@@ -680,27 +596,15 @@
       width: 14px;
       height: 14px;
       object-fit: contain;
-      transition: filter 0.2s ease;
       filter: brightness(0) invert(0.65);
-      opacity: 1;
+      transition: filter 0.2s ease;
     }
 
-    .project-link:hover img {
-      filter: brightness(0) invert(1);
-      opacity: 1;
-    }
+    .project-link:hover img { filter: brightness(0) invert(1); }
+    .project-link--github:hover img { filter: brightness(0) invert(0.9); }
 
-    .project-link--github:hover img {
-      filter: brightness(0) invert(0.9);
-      opacity: 1;
-    }
-
-    /* =============================================
-       FOOTER
-    ============================================= */
+    /* Footer */
     footer {
-      background: var(--bg-alt);
-      border-top: 1px solid var(--border);
       padding: 40px 48px;
       display: flex;
       align-items: center;
@@ -730,9 +634,7 @@
       transition: color 0.2s ease;
     }
 
-    .footer-back:hover {
-      color: var(--accent);
-    }
+    .footer-back:hover { color: var(--accent); }
 
     .footer-credit {
       font-family: var(--font-sans);
@@ -747,13 +649,9 @@
       transition: color 0.2s ease;
     }
 
-    .footer-credit a:hover {
-      color: var(--accent);
-    }
+    .footer-credit a:hover { color: var(--accent); }
 
-    /* =============================================
-       ANIMATIONS
-    ============================================= */
+    /* Animations */
     @keyframes fadeUp {
       to {
         opacity: 1;
@@ -761,94 +659,31 @@
       }
     }
 
-    /* =============================================
-       RESPONSIVE
-    ============================================= */
+    /* Responsive */
     @media (max-width: 900px) {
-      nav {
-        padding: 0 24px;
-      }
-
-      .nav-links {
-        gap: 24px;
-      }
-
-      #hero {
-        padding: 0 24px 60px;
-      }
-
-      section {
-        padding: 80px 24px;
-      }
-
-      .about-sticky {
-        padding: 60px 24px 24px;
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 56px;
-      }
-
-      .experience-item {
-        grid-template-columns: 1fr;
-        gap: 8px;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .logo-strip {
-        padding: 28px 24px;
-      }
-
-      .logo-strip-inner {
-        gap: 24px;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      footer {
-        padding: 32px 24px;
-      }
+      nav { padding: 0 24px; }
+      .nav-links { gap: 24px; }
+      #hero { padding: 0 24px 60px; }
+      section { padding: 80px 24px; }
+      .about-sticky { padding: 60px 24px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 56px; }
+      .experience-item { grid-template-columns: 1fr; gap: 8px; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .logo-strip { padding: 28px 24px; }
+      .logo-strip-inner { gap: 24px; flex-wrap: wrap; justify-content: center; }
+      footer { padding: 32px 24px; }
     }
 
     @media (max-width: 600px) {
-      .hero-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .gif-stack.fanned .gif-card:nth-child(1) {
-        transform: rotate(-10deg) translateX(-80px) translateY(20px);
-      }
-      .gif-stack.fanned .gif-card:nth-child(2) {
-        transform: rotate(-5deg) translateX(-40px) translateY(5px);
-      }
-      .gif-stack.fanned .gif-card:nth-child(4) {
-        transform: rotate(5deg) translateX(40px) translateY(5px);
-      }
-      .gif-stack.fanned .gif-card:nth-child(5) {
-        transform: rotate(10deg) translateX(80px) translateY(20px);
-      }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- =============================================
-       NAV
-  ============================================= -->
+  <!-- Nav -->
   <nav id="main-nav">
     <a href="#hero" class="nav-logo">JK</a>
     <ul class="nav-links">
@@ -858,9 +693,7 @@
     </ul>
   </nav>
 
-  <!-- =============================================
-       HERO
-  ============================================= -->
+  <!-- Hero -->
   <section id="hero">
     <div class="hero-bg-text" aria-hidden="true">Kopman</div>
     <div class="hero-content">
@@ -884,9 +717,7 @@
     </div>
   </section>
 
-  <!-- =============================================
-       LOGO STRIP
-  ============================================= -->
+  <!-- Logo Strip -->
   <div class="logo-strip">
     <div class="logo-strip-inner">
       <img src="assets/logos/giphy_logo.webp" alt="Giphy" />
@@ -897,9 +728,7 @@
     </div>
   </div>
 
-  <!-- =============================================
-       ABOUT
-  ============================================= -->
+  <!-- About -->
   <section id="about">
     <div class="about-scroll-track">
     <div class="about-sticky">
@@ -929,15 +758,13 @@
             </div>
           </div>
         </div>
-      </div></div><!-- /.about-grid /.about-grid-scroll -->
+      </div></div>
     </div>
-    </div><!-- /.about-sticky -->
-    </div><!-- /.about-scroll-track -->
+    </div>
+    </div>
   </section>
 
-  <!-- =============================================
-       EXPERIENCE
-  ============================================= -->
+  <!-- Experience -->
   <section id="experience">
     <div class="section-inner">
       <p class="section-label">Experience</p>
@@ -987,9 +814,7 @@
     </div>
   </section>
 
-  <!-- =============================================
-       PROJECTS
-  ============================================= -->
+  <!-- Projects -->
   <section id="projects">
     <div class="section-inner">
       <p class="section-label">Projects</p>
@@ -1124,9 +949,7 @@
     </div>
   </section>
 
-  <!-- =============================================
-       FOOTER
-  ============================================= -->
+  <!-- Footer -->
   <footer>
     <div class="footer-inner">
       <a href="#hero" class="footer-back">↑ Back to top</a>
@@ -1134,21 +957,14 @@
     </div>
   </footer>
 
-  <!-- =============================================
-       JAVASCRIPT
-  ============================================= -->
   <script>
-    // Nav is not sticky — no scroll state needed
-
-    // --- Scroll-triggered fade-in for experience + project cards ---
+    // Scroll-triggered fade-in for experience + project cards
     const observeEls = document.querySelectorAll('.experience-item, .project-card');
     const fadeObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Stagger within a group
           const siblings = [...entry.target.parentElement.children];
-          const idx = siblings.indexOf(entry.target);
-          entry.target.style.transitionDelay = `${idx * 55}ms`;
+          entry.target.style.transitionDelay = `${siblings.indexOf(entry.target) * 55}ms`;
           entry.target.classList.add('visible');
           fadeObserver.unobserve(entry.target);
         }
@@ -1157,11 +973,7 @@
 
     observeEls.forEach(el => fadeObserver.observe(el));
 
-    // --- GIF stack: scroll-driven deal animation ---
-    // The about section has a tall scroll track (580vh+). As the user scrolls
-    // through it, cards drop in one at a time — one card per ~80vh of scroll.
-    // The sticky content stays locked in view while scroll progress accumulates.
-    // Cards also un-deal when scrolling back up (fully reversible).
+    // GIF stack: scroll-driven deal animation
     (function () {
       const gifStack = document.getElementById('gifStack');
       const cards = [...gifStack.querySelectorAll('.gif-card')];
@@ -1169,105 +981,73 @@
       const aboutGridScroll = document.querySelector('.about-grid-scroll');
       const stickyEl = document.querySelector('.about-sticky');
 
-      // How many px the grid needs to translate upward so the text bottom is fully visible.
-      // = (grid bottom from sticky top) - (sticky height / viewport height)
       function measureTextOverflow() {
         const stickyRect = stickyEl.getBoundingClientRect();
         const gridRect = aboutGridScroll.getBoundingClientRect();
-        // gridRect.bottom - stickyRect.bottom = how much of the grid hangs below the sticky
         return Math.max(0, gridRect.bottom - stickyRect.bottom);
       }
       let textOverflow = measureTextOverflow();
       window.addEventListener('resize', () => { textOverflow = measureTextOverflow(); }, { passive: true });
 
-      // Final resting state for each card (index 0 = first in DOM = bottom of visual stack)
-      // Cards dealt in order 3→2→1→0 so the last one dealt sits on top
+      // Final position for each card; dealt in order 3→2→1→0 so index 0 ends up on top
       const finalStates = [
-        { rotate: -5,  tx:  8,  ty: 10, zIndex: 4 }, // card 1 (DOM) — dealt last, on top
-        { rotate:  6,  tx: -4,  ty:  4, zIndex: 3 },
-        { rotate: -3,  tx:  12, ty:  0, zIndex: 2 },
-        { rotate:  8,  tx: -8,  ty:  6, zIndex: 1 }, // card 4 (DOM) — dealt first, on bottom
+        { rotate: -5, tx:  8, ty: 10, zIndex: 4 },
+        { rotate:  6, tx: -4, ty:  4, zIndex: 3 },
+        { rotate: -3, tx: 12, ty:  0, zIndex: 2 },
+        { rotate:  8, tx: -8, ty:  6, zIndex: 1 },
       ];
-
-      // Deal order: bottom card first (index 3 in DOM), top card last (index 0)
       const dealOrder = [3, 2, 1, 0];
-
-      // Per-card state so we know which direction to animate (sized dynamically)
-      const cardState = new Array(cards.length).fill('hidden'); // 'hidden' | 'dealt'
+      const cardState = new Array(cards.length).fill('hidden');
 
       function dealCard(cardIndex) {
         if (cardState[cardIndex] === 'dealt') return;
         cardState[cardIndex] = 'dealt';
-
         const card = cards[cardIndex];
-        const state = finalStates[cardIndex];
-        card.style.zIndex = state.zIndex;
-
-        // If coming from hidden, snap to the start position first
+        const s = finalStates[cardIndex];
+        card.style.zIndex = s.zIndex;
         if (card.style.opacity === '' || card.style.opacity === '0') {
           card.style.transition = 'none';
-          card.style.transform = `translateY(-80px) rotate(${state.rotate * 0.5}deg) translate(${state.tx}px, ${state.ty}px)`;
+          card.style.transform = `translateY(-80px) rotate(${s.rotate * 0.5}deg) translate(${s.tx}px, ${s.ty}px)`;
           card.style.opacity = '0';
           card.offsetHeight; // force reflow
         }
-
         card.style.transition = 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease';
-        card.style.transform = `translateY(0px) rotate(${state.rotate}deg) translate(${state.tx}px, ${state.ty}px)`;
+        card.style.transform = `translateY(0px) rotate(${s.rotate}deg) translate(${s.tx}px, ${s.ty}px)`;
         card.style.opacity = '1';
       }
 
       function undealCard(cardIndex) {
         if (cardState[cardIndex] === 'hidden') return;
         cardState[cardIndex] = 'hidden';
-
         const card = cards[cardIndex];
-        const state = finalStates[cardIndex];
+        const s = finalStates[cardIndex];
         card.style.transition = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease';
-        card.style.transform = `translateY(-80px) rotate(${state.rotate * 0.5}deg) translate(${state.tx}px, ${state.ty}px)`;
+        card.style.transform = `translateY(-80px) rotate(${s.rotate * 0.5}deg) translate(${s.tx}px, ${s.ty}px)`;
         card.style.opacity = '0';
       }
 
       function onScroll() {
-        const trackRect = scrollTrack.getBoundingClientRect();
-        const vh = window.innerHeight;
-
-        // How far we've scrolled into the track (0 = track top just hit viewport top)
-        const scrolled = Math.max(0, -trackRect.top);
-
-        // Phase 1: Scroll the grid upward to reveal clipped text.
-        // translateY goes from 0 → -textOverflow over the first textOverflow px of scroll.
-        const translateY = -Math.min(scrolled, textOverflow);
-        aboutGridScroll.style.transform = `translateY(${translateY}px)`;
-
-        // Phase 2: After text is fully revealed, deal cards one per ~80vh.
-        // Card 0 (i=0) is the first gif — appears immediately on section entry.
-        // Cards 1–3 appear after text has scrolled fully, spaced ~80vh apart.
-        // postTextStart has a minimum of 1 cardScrollWindow so there's always
-        // meaningful breathing room between entry and the second card.
-        const cardScrollWindow = vh * 0.8;
+        const scrolled = Math.max(0, -scrollTrack.getBoundingClientRect().top);
+        const cardScrollWindow = window.innerHeight * 0.8;
         const postTextStart = Math.max(textOverflow, cardScrollWindow);
+
+        aboutGridScroll.style.transform = `translateY(${-Math.min(scrolled, textOverflow)}px)`;
 
         dealOrder.forEach((cardIdx, i) => {
           const threshold = i === 0 ? 0 : postTextStart + (i - 1) * cardScrollWindow;
-          if (scrolled >= threshold) {
-            dealCard(cardIdx);
-          } else {
-            undealCard(cardIdx);
-          }
+          scrolled >= threshold ? dealCard(cardIdx) : undealCard(cardIdx);
         });
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
-      // Run once on load in case user is mid-page
       onScroll();
     }());
 
-    // --- Parallax hero background text ---
+    // Parallax on hero background text
     const heroBgText = document.querySelector('.hero-bg-text');
     if (heroBgText) {
       window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        heroBgText.style.transform = `translate(-50%, calc(-52% + ${scrollY * 0.25}px))`;
+        heroBgText.style.transform = `translate(-50%, calc(-52% + ${window.scrollY * 0.25}px))`;
       }, { passive: true });
     }
   </script>
