@@ -956,7 +956,7 @@
 
     observeEls.forEach(el => fadeObserver.observe(el));
 
-    // GIF stack: deal cards in when about section enters viewport
+    // GIF stack: scroll-driven deal as about section travels up through the viewport
     (function () {
       const cards = [...document.querySelectorAll('.gif-card')];
       const dealOrder = [3, 2, 1, 0];
@@ -966,32 +966,49 @@
         { rotate: -3, tx: 12, ty:  0, zIndex: 2 },
         { rotate:  8, tx: -8, ty:  6, zIndex: 1 },
       ];
+      const cardState = new Array(cards.length).fill('hidden');
 
-      function dealCard(cardIndex, delay) {
+      function dealCard(cardIndex) {
+        if (cardState[cardIndex] === 'dealt') return;
+        cardState[cardIndex] = 'dealt';
         const card = cards[cardIndex];
         const s = finalStates[cardIndex];
         card.style.zIndex = s.zIndex;
-        card.style.transition = 'none';
-        card.style.transform = `translateY(-80px) rotate(${s.rotate * 0.5}deg) translate(${s.tx}px, ${s.ty}px)`;
-        card.style.opacity = '0';
-        card.offsetHeight; // force reflow
-        setTimeout(() => {
-          card.style.transition = 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease';
-          card.style.transform = `translateY(0px) rotate(${s.rotate}deg) translate(${s.tx}px, ${s.ty}px)`;
-          card.style.opacity = '1';
-        }, delay);
+        if (card.style.opacity === '' || card.style.opacity === '0') {
+          card.style.transition = 'none';
+          card.style.transform = `translateY(-80px) rotate(${s.rotate * 0.5}deg) translate(${s.tx}px, ${s.ty}px)`;
+          card.style.opacity = '0';
+          card.offsetHeight; // force reflow
+        }
+        card.style.transition = 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease';
+        card.style.transform = `translateY(0px) rotate(${s.rotate}deg) translate(${s.tx}px, ${s.ty}px)`;
+        card.style.opacity = '1';
       }
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            dealOrder.forEach((cardIdx, i) => dealCard(cardIdx, i * 180));
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
+      function undealCard(cardIndex) {
+        if (cardState[cardIndex] === 'hidden') return;
+        cardState[cardIndex] = 'hidden';
+        const card = cards[cardIndex];
+        const s = finalStates[cardIndex];
+        card.style.transition = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease';
+        card.style.transform = `translateY(-80px) rotate(${s.rotate * 0.5}deg) translate(${s.tx}px, ${s.ty}px)`;
+        card.style.opacity = '0';
+      }
 
-      observer.observe(document.getElementById('about'));
+      const aboutSection = document.getElementById('about');
+
+      function onScroll() {
+        const rect = aboutSection.getBoundingClientRect();
+        // How many px the section top has traveled past the bottom of the viewport
+        const scrolled = Math.max(0, window.innerHeight - rect.top);
+        const step = window.innerHeight * 0.3; // one card per 30% of viewport height
+        dealOrder.forEach((cardIdx, i) => {
+          scrolled >= i * step ? dealCard(cardIdx) : undealCard(cardIdx);
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
     }());
 
     // Parallax on hero background text
