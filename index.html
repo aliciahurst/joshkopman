@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Josh Kopman — VP of Engineering</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:        #030303;
+      --bg-alt:    #0d0d0d;
+      --ink:       #f0f0ee;
+      --ink-mid:   #a0a09c;
+      --ink-muted: #606060;
+      --border:    rgba(255, 255, 255, 0.1);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.6);
+      --shadow-card: 0 16px 64px rgba(0, 0, 0, 0.7);
+      --font-serif: 'Quattrocento', Georgia, serif;
+      --font-sans: 'Hanken Grotesk', system-ui, sans-serif;
+      --max-width: 1100px;
+      --nav-height: 64px;
+      --accent:   #00e4cc;
+      --accent-3: #f72585;
+      --accent-4: #ffd60a;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* =============================================
+       NAV
+    ============================================= */
+    nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      z-index: 10;
+      background: transparent;
+    }
+
+    .nav-logo {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 48px 80px;
+      position: relative;
+      overflow: hidden;
+      background-image: url('assets/other/josh_bg.webp');
+      background-size: cover;
+      background-position: center center;
+    }
+
+    /* Gradient overlay: dark at bottom for text, dark at top for nav legibility, dark on left */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(3, 3, 3, 0.85) 0%, rgba(3, 3, 3, 0) 55%),
+        linear-gradient(180deg,
+          rgba(3, 3, 3, 0.55) 0%,
+          rgba(3, 3, 3, 0.05) 40%,
+          rgba(3, 3, 3, 0.85) 100%
+        );
+      z-index: 1;
+    }
+
+
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -52%);
+      font-family: var(--font-serif);
+      font-size: clamp(100px, 22vw, 260px);
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: var(--max-width);
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--font-serif);
+      font-size: clamp(56px, 9vw, 120px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.9s ease 0.35s forwards;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      gap: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.8s ease 0.55s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink-mid);
+      max-width: 360px;
+      line-height: 1.5;
+    }
+
+    .hero-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 18px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.04);
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    /* Icon-only hero links (GitHub, LinkedIn) get consistent sizing */
+    .hero-link--icon {
+      min-width: 40px;
+      padding: 0 12px;
+    }
+
+    .hero-link:hover {
+      background: var(--accent-3);
+      color: #fff;
+      border-color: var(--accent-3);
+    }
+
+    .hero-link img {
+      width: 14px;
+      height: 14px;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: brightness(0) invert(0.75);
+      transition: filter 0.2s ease;
+    }
+
+    .hero-link:hover img {
+      filter: brightness(0) invert(1);
+    }
+
+    /* =============================================
+       COMPANY LOGOS STRIP
+    ============================================= */
+    .logo-strip {
+      position: relative;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 48px;
+    }
+
+    /* Fade the hero image into the logo strip from above */
+    .logo-strip::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 0;
+      right: 0;
+      height: 200px;
+      background: linear-gradient(to bottom, transparent, var(--bg-alt));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .logo-strip-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .logo-strip img {
+      height: 22px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.45;
+      filter: brightness(0) invert(1);
+      transition: opacity 0.25s ease;
+    }
+
+    .logo-strip img:hover {
+      opacity: 0.85;
+    }
+
+    /* =============================================
+       SECTION BASE
+    ============================================= */
+    section {
+      padding: 120px 48px;
+    }
+
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 56px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-label::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 48px;
+      background: currentColor;
+      opacity: 0.4;
+    }
+
+    /* Per-section label colors — each section gets its own hue */
+    #about    .section-label { color: var(--accent-3); }
+    #experience .section-label { color: var(--accent-4); }
+    /* #projects keeps the default --accent teal */
+
+    /* =============================================
+       ABOUT
+    ============================================= */
+    #about {
+      background: var(--bg);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--ink-mid);
+      margin-bottom: 24px;
+    }
+
+    .about-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-pull {
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 3vw, 38px);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: 40px;
+    }
+
+    /* =============================================
+       GIF STACK
+    ============================================= */
+
+    /* The about section needs extra scroll height to pace the card reveals.
+       We achieve this by wrapping in a tall scroll container and making
+       the visible content sticky inside it. */
+    #about {
+      padding: 0;
+    }
+
+    .about-scroll-track {
+      /* 100vh (initial view) + 80vh first-card pause + 3 × 80vh cards + 20vh tail */
+      min-height: 420vh;
+      position: relative;
+    }
+
+    .about-sticky {
+      position: sticky;
+      top: 0;
+      padding: 80px 48px 24px;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    /* The inner grid scrolls upward via JS transform as the user scrolls,
+       so all text becomes readable before the gif cards start appearing. */
+    .about-grid-scroll {
+      will-change: transform;
+    }
+
+    /* Tighten spacing inside the sticky about panel to fit within 100vh */
+    .about-sticky .section-label {
+      margin-bottom: 20px;
+    }
+
+    .about-sticky .about-pull {
+      margin-bottom: 16px;
+    }
+
+    .about-sticky .about-text p {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .gif-stack-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .gif-stack-label {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      font-style: normal;
+      color: var(--ink);
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    .gif-stack {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      margin: 0 auto;
+      overflow: visible;
+    }
+
+    .gif-card {
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      cursor: default;
+      /* All cards start stacked, above and invisible */
+      top: 30px;
+      left: 30px;
+      opacity: 0;
+      transform: translateY(-60px) rotate(0deg);
+      /* No transition by default — JS will add it per-card when dealing */
+    }
+
+    .gif-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* When a card is "dealt", JS assigns inline transform/opacity.
+       The transition is also set inline so timing is per-card. */
+    .gif-card.dealt {
+      opacity: 1;
+    }
+
+    /* =============================================
+       EXPERIENCE
+    ============================================= */
+    #experience {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .experience-item {
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 48px;
+      align-items: center;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .experience-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .experience-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .exp-company {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .exp-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .exp-role {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-mid);
+      line-height: 1.5;
+    }
+
+    .exp-years {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+
+    /* =============================================
+       PROJECTS
+    ============================================= */
+    #projects {
+      background: var(--bg);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 0;
+    }
+
+    .project-card {
+      padding: 36px 32px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: var(--bg-alt);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project-card:hover {
+      background: #141414;
+    }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .project-name {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .project-year {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .project-stack {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--accent-3);
+      text-transform: uppercase;
+    }
+
+    .project-desc {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--ink-mid);
+      flex: 1;
+    }
+
+    .project-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    /* Non-github links: bordered pill with ↗ arrow */
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.04);
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .project-link:hover {
+      background: var(--accent);
+      color: #030303;
+      border-color: var(--accent);
+    }
+
+    /* GitHub links: no border, just icon */
+    .project-link--github {
+      border: none;
+      padding: 5px 6px;
+      color: var(--ink-muted);
+      background: transparent;
+    }
+
+    .project-link--github:hover {
+      background: transparent;
+      border-color: transparent;
+      color: var(--accent);
+    }
+
+    .project-link img {
+      width: 14px;
+      height: 14px;
+      object-fit: contain;
+      transition: filter 0.2s ease;
+      filter: brightness(0) invert(0.65);
+      opacity: 1;
+    }
+
+    .project-link:hover img {
+      filter: brightness(0) invert(1);
+      opacity: 1;
+    }
+
+    .project-link--github:hover img {
+      filter: brightness(0) invert(0.9);
+      opacity: 1;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-back {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .footer-back:hover {
+      color: var(--accent);
+    }
+
+    .footer-credit {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--ink-muted);
+    }
+
+    .footer-credit a {
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-credit a:hover {
+      color: var(--accent);
+    }
+
+    /* =============================================
+       ANIMATIONS
+    ============================================= */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 900px) {
+      nav {
+        padding: 0 24px;
+      }
+
+      .nav-links {
+        gap: 24px;
+      }
+
+      #hero {
+        padding: 0 24px 60px;
+      }
+
+      section {
+        padding: 80px 24px;
+      }
+
+      .about-sticky {
+        padding: 60px 24px 24px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 56px;
+      }
+
+      .experience-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .logo-strip {
+        padding: 28px 24px;
+      }
+
+      .logo-strip-inner {
+        gap: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      footer {
+        padding: 32px 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .gif-stack.fanned .gif-card:nth-child(1) {
+        transform: rotate(-10deg) translateX(-80px) translateY(20px);
+      }
+      .gif-stack.fanned .gif-card:nth-child(2) {
+        transform: rotate(-5deg) translateX(-40px) translateY(5px);
+      }
+      .gif-stack.fanned .gif-card:nth-child(4) {
+        transform: rotate(5deg) translateX(40px) translateY(5px);
+      }
+      .gif-stack.fanned .gif-card:nth-child(5) {
+        transform: rotate(10deg) translateX(80px) translateY(20px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       NAV
+  ============================================= -->
+  <nav id="main-nav">
+    <a href="#hero" class="nav-logo">JK</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+    </ul>
+  </nav>
+
+  <!-- =============================================
+       HERO
+  ============================================= -->
+  <section id="hero">
+    <div class="hero-bg-text" aria-hidden="true">Kopman</div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">VP of Engineering · Giphy</p>
+      <h1 class="hero-name">Josh<br />Kopman</h1>
+      <div class="hero-bottom">
+        <p class="hero-title">Engineering leader. Builder of teams and software. Brooklyn-based, Giphy-stationed.</p>
+        <div class="hero-links">
+          <a href="mailto:joshkopman@gmail.com" class="hero-link">
+            <img src="assets/icons/email.webp" alt="" aria-hidden="true" />
+            Email
+          </a>
+          <a href="https://github.com/joshuakopman/" class="hero-link hero-link--icon" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <img src="assets/icons/github.webp" alt="" aria-hidden="true" />
+          </a>
+          <a href="https://www.linkedin.com/in/joshkopman/" class="hero-link hero-link--icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <img src="assets/icons/linkedin.webp" alt="" aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       LOGO STRIP
+  ============================================= -->
+  <div class="logo-strip">
+    <div class="logo-strip-inner">
+      <img src="assets/logos/giphy_logo.webp" alt="Giphy" />
+      <img src="assets/logos/shutterstock_logo.webp" alt="Shutterstock" />
+      <img src="assets/logos/huge_logo.webp" alt="Huge" />
+      <img src="assets/logos/xo_group_logo.webp" alt="XO Group" />
+      <img src="assets/logos/everyday_health_logo.webp" alt="Everyday Health" />
+    </div>
+  </div>
+
+  <!-- =============================================
+       ABOUT
+  ============================================= -->
+  <section id="about">
+    <div class="about-scroll-track">
+    <div class="about-sticky">
+    <div class="section-inner">
+      <p class="section-label">About</p>
+      <div class="about-grid-scroll"><div class="about-grid">
+        <div class="about-text">
+          <p>I spent my first eight years in tech heads-down as an individual contributor, writing .NET, JavaScript, and REST APIs at Everyday Health, XO Group, and Huge. That was nearly a decade ago.</p>
+          <p>Since then, I've led engineering teams at Shutterstock and now serve as VP of Engineering at Giphy, where I oversee the website, apps, search, APIs, partnerships, and infrastructure across an org of up to 50 people. My approach: high standards, honest feedback, leading with empathy, and only as much process as needed.</p>
+          <p>I studied Computer Science and Psychology at George Washington University and stuck around for my Master's in CS, which probably explains why I care as much about the people on my team as the systems they're building.</p>
+          <p>I live in Brooklyn with my wife. Outside of work I'm an amateur genealogist, an even more amateur Rocket League player, and a collector of records and vintage baseball cards. I have strong opinions about oysters and whiskey, though not usually together.</p>
+        </div>
+        <div class="gif-stack-container">
+          <p class="gif-stack-label">And yes, I have my own gifs.</p>
+          <div class="gif-stack" id="gifStack">
+            <div class="gif-card">
+              <img src="assets/gifs/Well Done Applause GIF by Originals.gif" alt="Well Done Applause GIF" loading="lazy" />
+            </div>
+            <div class="gif-card">
+              <img src="assets/gifs/Mood Wow GIF by Originals.gif" alt="Mood Wow GIF" loading="lazy" />
+            </div>
+            <div class="gif-card">
+              <img src="assets/gifs/Movie Time Popcorn GIF by Originals.gif" alt="Movie Time Popcorn GIF" loading="lazy" />
+            </div>
+            <div class="gif-card">
+              <img src="assets/gifs/Well Done Yes GIF by Originals.gif" alt="Well Done Yes GIF" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div></div><!-- /.about-grid /.about-grid-scroll -->
+    </div>
+    </div><!-- /.about-sticky -->
+    </div><!-- /.about-scroll-track -->
+  </section>
+
+  <!-- =============================================
+       EXPERIENCE
+  ============================================= -->
+  <section id="experience">
+    <div class="section-inner">
+      <p class="section-label">Experience</p>
+      <div class="experience-list">
+
+        <div class="experience-item">
+          <span class="exp-company">Giphy</span>
+          <div class="exp-details">
+            <span class="exp-role">Senior Director of Engineering (Head of Engineering) → VP of Engineering</span>
+          </div>
+          <span class="exp-years">Aug 2024 – Present</span>
+        </div>
+
+        <div class="experience-item">
+          <span class="exp-company">Shutterstock</span>
+          <div class="exp-details">
+            <span class="exp-role">Engineering Manager → Senior Engineering Manager → Director of Engineering</span>
+          </div>
+          <span class="exp-years">Jul 2017 – Aug 2024</span>
+        </div>
+
+        <div class="experience-item">
+          <span class="exp-company">Huge</span>
+          <div class="exp-details">
+            <span class="exp-role">Senior Engineer → Associate Technical Architect → Technical Architect</span>
+          </div>
+          <span class="exp-years">May 2014 – Jul 2017</span>
+        </div>
+
+        <div class="experience-item">
+          <span class="exp-company">XO Group</span>
+          <div class="exp-details">
+            <span class="exp-role">Engineer → Engineering Lead</span>
+          </div>
+          <span class="exp-years">Jan 2013 – May 2014</span>
+        </div>
+
+        <div class="experience-item">
+          <span class="exp-company">Everyday Health</span>
+          <div class="exp-details">
+            <span class="exp-role">Engineer</span>
+          </div>
+          <span class="exp-years">Oct 2009 – Jan 2013</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       PROJECTS
+  ============================================= -->
+  <section id="projects">
+    <div class="section-inner">
+      <p class="section-label">Projects</p>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-name">Ancestry Visualizer</h3>
+            <span class="project-year">2026</span>
+          </div>
+          <p class="project-stack">Codex</p>
+          <p class="project-desc">Grouping and sorting data insights and photo mosaic of my family tree.</p>
+          <div class="project-links">
+            <a href="https://joshuakopman.github.io/ancestry-visualizer/" class="project-link" target="_blank" rel="noopener noreferrer">Live &#8599;</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-name">PSA Collection: Smart Sort</h3>
+            <span class="project-year">2025</span>
+          </div>
+          <p class="project-stack">JavaScript · API</p>
+          <p class="project-desc">Sort PSA (a baseball card grading service website) collection tables by Collectible, Grade/Cert, or Price. Works with infinite scroll and no flicker.</p>
+          <div class="project-links">
+            <a href="https://chromewebstore.google.com/detail/psa-collection-smart-sort/lmfanaolaajoikgdfgbajmhmobckcoho?authuser=0&hl=en" class="project-link" target="_blank" rel="noopener noreferrer">Extension &#8599;</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-name">BestPicturePicker</h3>
+            <span class="project-year">2024</span>
+          </div>
+          <p class="project-stack">Starlark · Tidbyt SDK</p>
+          <p class="project-desc">Got a Tidbyt as a Christmas present. Based on my previous project, Pandemic Pictures, it randomly cycles through every Academy Award Best Picture nominee and shows the title, IMDB rating, year, and movie poster.</p>
+          <div class="project-links">
+            <a href="https://github.com/tidbyt/community/tree/main/apps/bestpicturepicker" class="project-link project-link--github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <img src="assets/icons/github.webp" alt="" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-name">Pandemic Pictures</h3>
+            <span class="project-year">2020–2021</span>
+          </div>
+          <p class="project-stack">Node · JavaScript · Handlebars · Docker · AWS</p>
+          <p class="project-desc">A movie tracker built during the pandemic to document a personal mission: watch every Best Picture nominee ever made. While I handled the backend, my wife PMed, designed, and coded the frontend—because why just make a spreadsheet when you can build an app?</p>
+          <div class="project-links">
+            <a href="http://pandemicpictures.info/" class="project-link" target="_blank" rel="noopener noreferrer">Live &#8599;</a>
+            <a href="https://github.com/joshuakopman/PandemicPictures" class="project-link project-link--github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <img src="assets/icons/github.webp" alt="" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-name">Netflix Shuffle</h3>
+            <span class="project-year">2019</span>
+          </div>
+          <p class="project-stack">JavaScript · API</p>
+          <p class="project-desc">A fun Chrome extension to randomize TV episodes of any show. Also released one for Prime Video. Got a combined 38 users and 3 ratings.</p>
+          <div class="project-links">
+            <a href="https://chromewebstore.google.com/detail/Netflix%20Shuffle/picodpeiiabpnlbhopebfdmnlkopeolk?hl=en&authuser=0" class="project-link" target="_blank" rel="noopener noreferrer">Extension &#8599;</a>
+            <a href="https://github.com/joshuakopman/chrome-nextflix-shuffle" class="project-link project-link--github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <img src="assets/icons/github.webp" alt="" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-name">GPSChat</h3>
+            <span class="project-year">2015</span>
+          </div>
+          <p class="project-stack">Node · WebSockets · JavaScript · API · Docker</p>
+          <p class="project-desc">An app that dynamically creates chat rooms based on your GPS location in the browser. When the room hits capacity, it splits and gets more granular.</p>
+          <div class="project-links">
+            <a href="https://gpschat.onrender.com/" class="project-link" target="_blank" rel="noopener noreferrer">Demo &#8599;</a>
+            <a href="https://github.com/joshuakopman/GPSChat" class="project-link project-link--github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <img src="assets/icons/github.webp" alt="" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-name">RecruitMeNot</h3>
+            <span class="project-year">2015</span>
+          </div>
+          <p class="project-stack">JavaScript · API</p>
+          <p class="project-desc">A tool to scan your LinkedIn inbox and quickly decline any messages from recruiters.</p>
+          <div class="project-links">
+            <a href="https://chromewebstore.google.com/detail/recruit-me-not/joiolfklfdcmfllfnlhalifffnnhibkc?authuser=0&hl=en" class="project-link" target="_blank" rel="noopener noreferrer">Extension &#8599;</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-name">HueTube</h3>
+            <span class="project-year">2014</span>
+          </div>
+          <p class="project-stack">Node · MongoDB · JavaScript · Docker · API</p>
+          <p class="project-desc">Phillips Hue iOS app was too clunky, so I built a single screen dashboard to control the lights and colors of the bulbs in my apartment based on room.</p>
+          <div class="project-links">
+            <a href="https://joshuakopman.github.io/HueTube/demo/" class="project-link" target="_blank" rel="noopener noreferrer">Demo &#8599;</a>
+            <a href="https://github.com/joshuakopman/HueTube" class="project-link project-link--github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <img src="assets/icons/github.webp" alt="" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <h3 class="project-name">MovieOCD</h3>
+            <span class="project-year">2012</span>
+          </div>
+          <p class="project-stack">C# · .NET · MVC · SQL Server · JavaScript · API</p>
+          <p class="project-desc">A .NET app that aggregates movie ratings across IMDB, Netflix, and Rotten Tomatoes at a time where that didn't exist! My friend built the corresponding mobile app.</p>
+          <div class="project-links">
+            <a href="https://joshuakopman.github.io/MovieOCD/" class="project-link" target="_blank" rel="noopener noreferrer">Demo &#8599;</a>
+            <a href="https://github.com/joshuakopman/MovieOCD" class="project-link project-link--github" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <img src="assets/icons/github.webp" alt="" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer>
+    <div class="footer-inner">
+      <a href="#hero" class="footer-back">↑ Back to top</a>
+      <p class="footer-credit">Website by <a href="https://aliciahurst.com/websites" target="_blank" rel="noopener noreferrer">Hursthause</a></p>
+    </div>
+  </footer>
+
+  <!-- =============================================
+       JAVASCRIPT
+  ============================================= -->
+  <script>
+    // Nav is not sticky — no scroll state needed
+
+    // --- Scroll-triggered fade-in for experience + project cards ---
+    const observeEls = document.querySelectorAll('.experience-item, .project-card');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Stagger within a group
+          const siblings = [...entry.target.parentElement.children];
+          const idx = siblings.indexOf(entry.target);
+          entry.target.style.transitionDelay = `${idx * 55}ms`;
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+    observeEls.forEach(el => fadeObserver.observe(el));
+
+    // --- GIF stack: scroll-driven deal animation ---
+    // The about section has a tall scroll track (580vh+). As the user scrolls
+    // through it, cards drop in one at a time — one card per ~80vh of scroll.
+    // The sticky content stays locked in view while scroll progress accumulates.
+    // Cards also un-deal when scrolling back up (fully reversible).
+    (function () {
+      const gifStack = document.getElementById('gifStack');
+      const cards = [...gifStack.querySelectorAll('.gif-card')];
+      const scrollTrack = document.querySelector('.about-scroll-track');
+      const aboutGridScroll = document.querySelector('.about-grid-scroll');
+      const stickyEl = document.querySelector('.about-sticky');
+
+      // How many px the grid needs to translate upward so the text bottom is fully visible.
+      // = (grid bottom from sticky top) - (sticky height / viewport height)
+      function measureTextOverflow() {
+        const stickyRect = stickyEl.getBoundingClientRect();
+        const gridRect = aboutGridScroll.getBoundingClientRect();
+        // gridRect.bottom - stickyRect.bottom = how much of the grid hangs below the sticky
+        return Math.max(0, gridRect.bottom - stickyRect.bottom);
+      }
+      let textOverflow = measureTextOverflow();
+      window.addEventListener('resize', () => { textOverflow = measureTextOverflow(); }, { passive: true });
+
+      // Final resting state for each card (index 0 = first in DOM = bottom of visual stack)
+      // Cards dealt in order 3→2→1→0 so the last one dealt sits on top
+      const finalStates = [
+        { rotate: -5,  tx:  8,  ty: 10, zIndex: 4 }, // card 1 (DOM) — dealt last, on top
+        { rotate:  6,  tx: -4,  ty:  4, zIndex: 3 },
+        { rotate: -3,  tx:  12, ty:  0, zIndex: 2 },
+        { rotate:  8,  tx: -8,  ty:  6, zIndex: 1 }, // card 4 (DOM) — dealt first, on bottom
+      ];
+
+      // Deal order: bottom card first (index 3 in DOM), top card last (index 0)
+      const dealOrder = [3, 2, 1, 0];
+
+      // Per-card state so we know which direction to animate (sized dynamically)
+      const cardState = new Array(cards.length).fill('hidden'); // 'hidden' | 'dealt'
+
+      function dealCard(cardIndex) {
+        if (cardState[cardIndex] === 'dealt') return;
+        cardState[cardIndex] = 'dealt';
+
+        const card = cards[cardIndex];
+        const state = finalStates[cardIndex];
+        card.style.zIndex = state.zIndex;
+
+        // If coming from hidden, snap to the start position first
+        if (card.style.opacity === '' || card.style.opacity === '0') {
+          card.style.transition = 'none';
+          card.style.transform = `translateY(-80px) rotate(${state.rotate * 0.5}deg) translate(${state.tx}px, ${state.ty}px)`;
+          card.style.opacity = '0';
+          card.offsetHeight; // force reflow
+        }
+
+        card.style.transition = 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease';
+        card.style.transform = `translateY(0px) rotate(${state.rotate}deg) translate(${state.tx}px, ${state.ty}px)`;
+        card.style.opacity = '1';
+      }
+
+      function undealCard(cardIndex) {
+        if (cardState[cardIndex] === 'hidden') return;
+        cardState[cardIndex] = 'hidden';
+
+        const card = cards[cardIndex];
+        const state = finalStates[cardIndex];
+        card.style.transition = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease';
+        card.style.transform = `translateY(-80px) rotate(${state.rotate * 0.5}deg) translate(${state.tx}px, ${state.ty}px)`;
+        card.style.opacity = '0';
+      }
+
+      function onScroll() {
+        const trackRect = scrollTrack.getBoundingClientRect();
+        const vh = window.innerHeight;
+
+        // How far we've scrolled into the track (0 = track top just hit viewport top)
+        const scrolled = Math.max(0, -trackRect.top);
+
+        // Phase 1: Scroll the grid upward to reveal clipped text.
+        // translateY goes from 0 → -textOverflow over the first textOverflow px of scroll.
+        const translateY = -Math.min(scrolled, textOverflow);
+        aboutGridScroll.style.transform = `translateY(${translateY}px)`;
+
+        // Phase 2: After text is fully revealed, deal cards one per ~80vh.
+        // Card 0 (i=0) is the first gif — appears immediately on section entry.
+        // Cards 1–3 appear after text has scrolled fully, spaced ~80vh apart.
+        // postTextStart has a minimum of 1 cardScrollWindow so there's always
+        // meaningful breathing room between entry and the second card.
+        const cardScrollWindow = vh * 0.8;
+        const postTextStart = Math.max(textOverflow, cardScrollWindow);
+
+        dealOrder.forEach((cardIdx, i) => {
+          const threshold = i === 0 ? 0 : postTextStart + (i - 1) * cardScrollWindow;
+          if (scrolled >= threshold) {
+            dealCard(cardIdx);
+          } else {
+            undealCard(cardIdx);
+          }
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      // Run once on load in case user is mid-page
+      onScroll();
+    }());
+
+    // --- Parallax hero background text ---
+    const heroBgText = document.querySelector('.hero-bg-text');
+    if (heroBgText) {
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        heroBgText.style.transform = `translate(-50%, calc(-52% + ${scrollY * 0.25}px))`;
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>
